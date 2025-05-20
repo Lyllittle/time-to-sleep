@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "time-to-sleep",
+	"version": "${version}",
+	"name": "Time to Sleep",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/time-to-sleep/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"lylittle.time_to_sleep.TimeToSleep"
+		],
+		"client": [
+			"lylittle.time_to_sleep.TimeToSleepClient"
+		],
+		"fabric-datagen": [
+			"lylittle.time_to_sleep.TimeToSleepDataGenerator"
+		]
+	},
+	"mixins": [
+		"time-to-sleep.mixins.json",
+		{
+			"config": "time-to-sleep.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
