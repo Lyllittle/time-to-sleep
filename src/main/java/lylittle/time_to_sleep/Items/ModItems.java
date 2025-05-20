@@ -4,7 +4,6 @@ import lylittle.time_to_sleep.Items.Custom.EmberGlazeElixirItem;
 import lylittle.time_to_sleep.TimeToSleep;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -17,4 +16,9 @@ public class ModItems {
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, Identifier.of(TimeToSleep.MOD_ID,name),item);
     }
+
+    public static void registerItems(){
+        TimeToSleep.LOGGER.info("Registering Items for "+TimeToSleep.MOD_ID);
+    }
+
 }
