@@ -1,5 +1,6 @@
 package lylittle.time_to_sleep;
 
+import lylittle.time_to_sleep.Blocks.ModBlocks;
 import lylittle.time_to_sleep.Items.ModItems;
 import net.fabricmc.api.ModInitializer;
 
@@ -15,9 +16,12 @@ public class TimeToSleep implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerItems();
+		ModBlocks.registerBlocks();
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
 			entries.add(ModItems.EMBERGLAZE_ELIXIR);
 		});
-
+		ItemGroupEvents.modifyEntriesEvent(ItemGroups.OPERATOR).register(entries -> {
+			entries.add(ModBlocks.DREAM_FOREST_FLOOR);
+		});
 	}
 }
