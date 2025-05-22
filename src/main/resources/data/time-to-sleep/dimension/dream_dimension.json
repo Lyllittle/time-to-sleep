@@ -1,0 +1,18 @@
+{
+  "type": "time-to-sleep:dream_type",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "minecraft:the_void",
+      "lakes": false,
+      "features": false,
+      "layers": [
+        {
+          "height": 4,
+          "block": "time-to-sleep:dream_forest_floor"
+        }
+      ],
+      "structure_overrides": []
+    }
+  }
+}

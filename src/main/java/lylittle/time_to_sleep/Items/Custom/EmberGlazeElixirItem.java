@@ -1,6 +1,9 @@
 package lylittle.time_to_sleep.Items.Custom;
 
+import lylittle.time_to_sleep.Dimension;
 import lylittle.time_to_sleep.DreamNetworking;
+import lylittle.time_to_sleep.DreamState;
+import lylittle.time_to_sleep.TimeToSleep;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
@@ -8,8 +11,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.PersistentState;
+import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
 
 public class EmberGlazeElixirItem extends Item {
@@ -20,10 +27,16 @@ public class EmberGlazeElixirItem extends Item {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (!world.isClient && user instanceof ServerPlayerEntity player) {
-            // Check for soul campfire nearby
             if (isNearSoulCampfire(world, player.getBlockPos(), 3)) {
-                // Trigger sleep sequence (see below)
-                DreamNetworking.sendSleepAnimation(player); // custom packet
+                DreamNetworking.sendSleepAnimation(player);
+                PersistentStateManager manager = world.getServer().getOverworld().getPersistentStateManager();
+                DreamState dreamState = manager.getOrCreate(
+                        DreamState.TYPE,"dream_dimensions"
+                );
+                if (!dreamState.isOnTheMap(user.getUuid())){
+                    dreamState.setDimensionKey(user.getUuid(), Identifier.of(TimeToSleep.MOD_ID,"dream_forest_"+user.getUuid().toString()));
+                }
+                Dimension.tpOrGenerate(user.getUuid(),Identifier.of(TimeToSleep.MOD_ID,"dream_forest_"+user.getUuid().toString()));
             }
         }
 
