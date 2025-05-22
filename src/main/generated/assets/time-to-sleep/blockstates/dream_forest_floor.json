@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "block_id=0": {
+      "model": "minecraft:block/podzol"
+    },
+    "block_id=1": {
+      "model": "minecraft:block/amethyst_block"
+    },
+    "block_id=2": {
+      "model": "minecraft:block/mossy_stone"
+    }
+  }
+}

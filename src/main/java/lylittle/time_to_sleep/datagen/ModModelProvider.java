@@ -2,6 +2,8 @@ package lylittle.time_to_sleep.datagen;
 
 import lylittle.time_to_sleep.Blocks.Custom.DreamForestFloorBlock;
 import lylittle.time_to_sleep.Blocks.ModBlocks;
+import lylittle.time_to_sleep.Items.ModItems;
+import lylittle.time_to_sleep.TimeToSleep;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -26,5 +28,6 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        itemModelGenerator.register(ModItems.EMBERGLAZE_ELIXIR,Models.GENERATED);
     }
 }

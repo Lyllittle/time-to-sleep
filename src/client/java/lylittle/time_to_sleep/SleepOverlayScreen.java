@@ -16,14 +16,14 @@ public class SleepOverlayScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        int alpha = Math.min(ticks * 8, 255);
+        int alpha = Math.min(ticks * 4, 255);
         int color = (alpha << 24); // ARGB: black with increasing alpha
 
         context.fill(0, 0, width, height, color);
         ticks++;
 
         // Optional: close screen after fade
-        if (ticks > 80) {
+        if (ticks > 220) {
             onSleepAnimationComplete();
         }
     }
