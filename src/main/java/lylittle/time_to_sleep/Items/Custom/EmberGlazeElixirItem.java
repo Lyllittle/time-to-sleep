@@ -32,7 +32,7 @@ public class EmberGlazeElixirItem extends Item {
                         DreamState.TYPE,"dream_dimensions"
                 );
                 if (!dreamState.isOnTheMap(user.getUuid())){
-                    dreamState.setDimensionKey(user.getUuid(), Identifier.of(TimeToSleep.MOD_ID,"dream_forest_"+user.getUuid().toString()));
+                    dreamState.setNewDimensionKey(user.getUuid());
                 }
                 Dimension.tp(user.getUuid(),user);
             }
