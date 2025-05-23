@@ -11,11 +11,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
 
@@ -36,7 +34,7 @@ public class EmberGlazeElixirItem extends Item {
                 if (!dreamState.isOnTheMap(user.getUuid())){
                     dreamState.setDimensionKey(user.getUuid(), Identifier.of(TimeToSleep.MOD_ID,"dream_forest_"+user.getUuid().toString()));
                 }
-                Dimension.tpOrGenerate(user.getUuid(),Identifier.of(TimeToSleep.MOD_ID,"dream_forest_"+user.getUuid().toString()));
+                Dimension.tp(user.getUuid(),user);
             }
         }
 

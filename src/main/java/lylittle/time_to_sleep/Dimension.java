@@ -1,18 +1,11 @@
 package lylittle.time_to_sleep;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.dimension.DimensionOptions;
+import net.minecraft.entity.LivingEntity;
 
 import java.util.UUID;
 
 public class Dimension {
-    public static void tpOrGenerate(UUID uuid, Identifier id){
-
-    }
-
-    public static void generateDreamForest(Identifier id){
+    public static void tp(UUID uuid, LivingEntity user) {
 
     }
 }

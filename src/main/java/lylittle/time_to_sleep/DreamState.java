@@ -5,14 +5,27 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PersistentState;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
 public class DreamState extends PersistentState {
-    private static final Map<UUID, Identifier> DREAM_PLAYER_MAP = Map.of();
+    private static final Map<UUID, BlockPos> DREAM_PLAYER_MAP = Map.of();
+
+    public void setNewDimensionKey(UUID uuid){
+        Collection<BlockPos> posList = DREAM_PLAYER_MAP.values();
+        int BiggestX = -65536;
+        for(BlockPos pos : posList){
+            if(pos.getX()>BiggestX){
+                BiggestX = pos.getX();
+            }
+        }
+        BlockPos pos = new BlockPos(BiggestX+4096,5,0);
+        setDimensionKey(uuid,pos);
+    }
 
     public Boolean isOnTheMap(UUID uuid){
         return DREAM_PLAYER_MAP.containsKey(uuid);
@@ -28,13 +41,13 @@ public class DreamState extends PersistentState {
     public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         NbtList list = new NbtList();
 
-        for (Map.Entry<UUID, Identifier> entry : DREAM_PLAYER_MAP.entrySet()) {
+        for (Map.Entry<UUID, BlockPos> entry : DREAM_PLAYER_MAP.entrySet()) {
             UUID uuid = entry.getKey();
-            Identifier dimensionId = entry.getValue();
+            BlockPos pos = entry.getValue();
 
             NbtCompound data = new NbtCompound();
             data.putString("uuid", uuid.toString());
-            data.putString("dimension", dimensionId.toString());
+            data.putLong("dimension", pos.asLong());
 
             list.add(data);
         }
@@ -51,12 +64,12 @@ public class DreamState extends PersistentState {
                 if (!(element instanceof NbtCompound compound)) continue;
 
                 String uuidString = compound.getString("uuid");
-                String dimensionString = compound.getString("dimension");
+                Long posLong = compound.getLong("dimension");
 
                 try {
                     UUID uuid = UUID.fromString(uuidString);
-                    Identifier dimensionId = Identifier.of(TimeToSleep.MOD_ID,dimensionString);
-                    DREAM_PLAYER_MAP.put(uuid, dimensionId);
+                    BlockPos pos = BlockPos.fromLong(posLong);
+                    DREAM_PLAYER_MAP.put(uuid, pos);
                 } catch (IllegalArgumentException e) {
                     // Log warning or silently skip if the data is invalid
                     TimeToSleep.LOGGER.error("Skipping invalid dream dimension entry: " + e.getMessage());
@@ -72,13 +85,12 @@ public class DreamState extends PersistentState {
     }
 
 
-    public Identifier getDimensionKey(UUID uuid){
-
+    public BlockPos getDimensionKey(UUID uuid){
         return DREAM_PLAYER_MAP.get(uuid);
     }
 
-    public void setDimensionKey(UUID uuid, Identifier key){
-        DREAM_PLAYER_MAP.put(uuid, key);
+    public void setDimensionKey(UUID uuid, BlockPos pos){
+        DREAM_PLAYER_MAP.put(uuid, pos);
         markDirty();
     }
 }
